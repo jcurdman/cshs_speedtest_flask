@@ -206,3 +206,10 @@ footer a {
     color: #4da6ff;
     text-decoration: none;
 }
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  /* Optional: set a specific width; this method doesn't work well if the width is 100% */
+  width: 80%;
+}
