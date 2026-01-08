@@ -4,209 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CSHS Internet Speed Test</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      /* Colors inspired by the CSHS seal */
-      --blue-700: #0B3D91;   /* deep navy */
-      --blue-500: #2563EB;   /* vivid blue */
-      --red-600:  #DC2626;   /* gear red */
-      --gold-500: #F59E0B;   /* torch flame */
-      --bg:       #F8FAFC;   /* soft background */
-      --text:     #0F172A;   /* dark text */
-      --ring:     rgba(37, 99, 235, 0.25);
-    }
+<!--  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">-->
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
 
-    body {
-      margin: 0;
-      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    /* Header container */
-    .site-header {
-      position: relative;
-      isolation: isolate;
-      background: radial-gradient(1200px 300px at 10% 0%, rgba(37, 99, 235, 0.07), transparent 60%),
-                  linear-gradient(0deg, #ffffff, #ffffff);
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    /* Top bar for subtle accent */
-    .site-header::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--blue-500), var(--gold-500), var(--red-600));
-    }
-
-    /* Inner layout */
-    .header-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px 24px 28px;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 16px;
-      align-items: center;
-    }
-
-<!--    /* Logo circle (placeholder) */-->
-<!--    .logo {-->
-<!--      width: 52px;-->
-<!--      height: 52px;-->
-<!--      border-radius: 50%;-->
-<!--      background:-->
-<!--        radial-gradient(circle at 32% 30%, var(&#45;&#45;gold-500) 0 18px, transparent 20px),-->
-<!--        radial-gradient(circle at 68% 34%, var(&#45;&#45;red-600) 0 22px, transparent 24px),-->
-<!--        linear-gradient(135deg, var(&#45;&#45;blue-700), var(&#45;&#45;blue-500));-->
-<!--      box-shadow: 0 0 0 4px var(&#45;&#45;ring);-->
-<!--      border: 2px solid #ffffff;-->
-<!--    }-->
-
-    /* Title */
-    .title {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.15;
-    }
-    .title .brand {
-      font-weight: 700;
-      font-size: clamp(18px, 2.4vw, 22px);
-      letter-spacing: 0.2px;
-      color: var(--blue-700);
-    }
-    .title .product {
-      font-weight: 700;
-      font-size: clamp(24px, 3.4vw, 32px);
-      color: var(--text);
-    }
-
-    /* Right-side actions */
-    .actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .btn {
-      appearance: none;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 120ms ease, box-shadow 180ms ease, background 180ms ease;
-    }
-    .btn:focus-visible {
-      outline: 3px solid var(--ring);
-      outline-offset: 2px;
-    }
-    .btn.primary {
-      background: linear-gradient(180deg, var(--blue-500), var(--blue-700));
-      color: #fff;
-      box-shadow: 0 8px 16px rgba(11, 61, 145, 0.18);
-      width: 180px;
-      height: 50px;
-    }
-    .btn.primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 22px rgba(11, 61, 145, 0.22);
-    }
-    .btn.ghost {
-      background: #ffffff;
-      color: var(--blue-700);
-      border: 1px solid #e5e7eb;
-    }
-    .btn.ghost:hover {
-      background: #f8fafc;
-    }
-
-    /* Subheader status strip */
-    .status-strip {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 12px 24px 16px;
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      font-size: 14px;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      color: var(--text);
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--gold-500);
-      box-shadow: 0 0 0 4px var(--ring);
-    }
-
-    .container {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-      justify-content: center;
-      align-items: center;
-      height: 50vh;
-    }
-    .results-box {
-      background: white;
-      border: 2px solid #007BFF;
-      border-radius: 8px;
-      padding: 20px;
-      width: 250px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      text-align: left;
-    }
-    .results-box span {
-      display: block;
-      margin: 10px 0;
-      font-size: 18px;
-      color: #333;
-    }
-    .image-box {
-      width: 250px;
-      height: 200px;
-      border: 2px dashed #ccc;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fafafa;
-    }
-    .image-box img {
-      max-width: 100%;
-      max-height: 100%;
-      border-radius: 5px;
-    }
-
-    /* Responsiveness */
-    @media (max-width: 640px) {
-      .header-wrap {
-        grid-template-columns: auto 1fr;
-      }
-      .actions {
-        grid-column: 1 / -1;
-        justify-content: flex-start;
-      }
-    }
-  </style>
 </head>
 <body>
   <header class="site-header">
     <div class="header-wrap">
       <div class="logo" aria-hidden="true">
-          <img src="../static/calaca_school_logo.png" alt="School Logo" width="200" height="200">
+          <img src="../static/img/calaca_school_logo.png" alt="School Logo" width="200" height="200">
       </div>
 
       <div class="title" role="heading" aria-level="1">
@@ -220,7 +26,7 @@
     </div>
 
     <div class="status-strip" aria-live="polite">
-<!--      <span class="pill"><span class="dot" aria-hidden="true"></span> Connected to: CSHS Network</span>-->
+      <span class="pill"><span class="dot" aria-hidden="true"></span> Connected to: {{ isp_name }}</span>
       <span class="pill"><span class="dot" aria-hidden="true"></span> Status: Ready</span>
     </div>
   </header>
@@ -229,27 +35,25 @@
 
         <!-- Results Box -->
         <div class="results-box" id="results">
-          Click "Run Test" to see results here.
+          Click "Run Speed Test" to see results here.
         </div>
 
         <!-- Image Box -->
         <div class="image-box">
-          <img src="../static/rap2.jpg" alt="Speedtest Graphic" width="260" height="212">
+          <img id="dynamic-image" src="../static/img/test_net.jpg" alt="Speedtest Graphic" width="260" height="212">
         </div>
 
   </div>
 
-  <script>
-    async function runSpeedtest() {
-      document.getElementById("results").innerHTML = "Testing...";
-      const response = await fetch('http://127.0.0.1:5000/speedtest');
-      const data = await response.json();
-      document.getElementById("results").innerHTML = `
-        <span>Download Speed: ${data.download} Mbps</span>
-        <span>Upload Speed: ${data.upload} Mbps</span>
-        <span>Ping: ${data.ping} ms</span>
-      `;
-    }
-  </script>
+  <!-- Footer section -->
+    <footer>
+        <p>&copy; 2026 Created by the students of CSHS</p>
+        <p>contact1@example.com</p>
+        <p>contact2@example.com</p>
+        <p>contact3@example.com</p>
+        <p>contact4@example.com</p>
+    </footer>
+
+  <script src="{{url_for('static', filename='js/script.js')}}"></script>
 </body>
 </html>
